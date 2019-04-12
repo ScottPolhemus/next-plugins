@@ -62,10 +62,15 @@ module.exports = (
     )
   }
 
-  const postcssConfigPath = findUp.sync('postcss.config.js', {
-    cwd: config.context
-  })
-  let postcssLoader
+  let postcssConfigPath, postcssLoader;
+
+  if (postcssLoaderOptions.config && postcssLoaderOptions.config.path) {
+    postcssConfigPath = postcssLoaderOptions.config.path
+  } else {
+    postcssConfigPath = findUp.sync('postcss.config.js', {
+      cwd: config.context
+    })
+  }
 
   if (postcssConfigPath) {
     // Copy the postcss-loader config options first.
